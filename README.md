@@ -1,3 +1,4 @@
+
 [【码上开学】](https://rengwuxian.com/tag/kotlin/)Kotlin 課後練習題 分享
 ## 【码上开学】Kotlin 的变量、函数和类型
 ### 使用 Android Studio 创建一个基于 Kotlin 的新项目（Empty Activity），添加一个新的属性（类型是非空的 View），在 onCreate 函数中初始化它。
@@ -99,3 +100,37 @@ average: 50000.5, arrayTimeCost: 12.222700ms
 average: 50000.5, intArrayTimeCost: 3.033400ms
 average: 50000.5, listTimeCost: 6.090700ms
 ```
+## Kotlin 里那些「更方便的」
+### 请按照以下要求实现一个 Student 类：
+- 写出三个构造器，其中一个必须是主构造器
+- 主构造器中的参数作为属性
+- 写一个普通函数 show，要求通过字符串模板输出类中的属性
+
+程式碼如下 : 
+```kotlin
+private class Student(var name: String) {
+    var id = 0
+    var age = 0
+
+    constructor(name: String, id: Int) : this(name) {
+        this.id = id
+    }
+    constructor(name: String, id: Int, age: Int) : this(name, id) {
+        this.age = age
+    }
+
+    fun show() = println("Student name: ${this.name}, id: ${this.id}, age: ${this.age}")
+}
+```
+
+### 编写程序，使用今天所讲的操作符，找出集合 {21, 40, 11, 33, 78} 中能够被 3 整除的所有元素，并输出。
+程式碼如下 : 
+```kotlin
+    fun getData() {
+        val myList = listOf(21, 40, 11, 33, 78)
+        myList.filter { i -> i % 3 == 0 }.forEach { i -> print("$i ") }
+    }
+```
+
+
+### End
