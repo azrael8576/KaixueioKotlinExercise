@@ -1,5 +1,3 @@
-
-[【码上开学】](https://rengwuxian.com/tag/kotlin/)Kotlin 課後練習題 分享
 ## 【码上开学】Kotlin 的变量、函数和类型
 ### 使用 Android Studio 创建一个基于 Kotlin 的新项目（Empty Activity），添加一个新的属性（类型是非空的 View），在 onCreate 函数中初始化它。
 程式碼如下 : 
