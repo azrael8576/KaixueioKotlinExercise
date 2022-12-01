@@ -1,5 +1,5 @@
 
-[【码上开学】](https://rengwuxian.com/tag/kotlin/)Kotlin 課後練習題
+[【码上开学】](https://rengwuxian.com/tag/kotlin/)Kotlin 課後練習題 分享
 ## 【码上开学】Kotlin 的变量、函数和类型
 ### 使用 Android Studio 创建一个基于 Kotlin 的新项目（Empty Activity），添加一个新的属性（类型是非空的 View），在 onCreate 函数中初始化它。
 程式碼如下 : 
@@ -130,6 +130,25 @@ private class Student(var name: String) {
         val myList = listOf(21, 40, 11, 33, 78)
         myList.filter { i -> i % 3 == 0 }.forEach { i -> print("$i ") }
     }
+```
+## Kotlin 的泛型
+### 实现一个 fill 函数，传入一个 Array 和一个对象，将对象填充到 Array 中，要求 Array 参数的泛型支持逆变（假设 Array size 为 1）。
+
+程式碼如下 : 
+```kotlin
+fun<T> fill(array : Array<T>, item : T) {
+    array[0] = item
+}
+```
+
+### 实现一个 copy 函数，传入两个 Array 参数，将一个 Array 中的元素复制到另外个 Array 中，要求 Array 参数的泛型分别支持协变和逆变。（提示：Kotlin 中的 for 循环如果要用索引，需要使用 Array.indices）
+程式碼如下 : 
+```kotlin
+fun<T> copy(arrayIn : Array<in T>, arrayOut : Array<out T>) {
+    for (i in arrayIn.indices) {
+        arrayIn[i] = arrayOut[i]
+    }
+}
 ```
 
 
