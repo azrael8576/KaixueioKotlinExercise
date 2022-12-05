@@ -97,22 +97,28 @@ class MainActivity : AppCompatActivity() {
 
             val bitmap = getImage(imgUrl)
             mImageIv.setImageBitmap(bitmap)
-            
-            val bitmap1 = cropBitmap(bitmap,
-                0,
-                0,
-                bitmap.width / 2,
-                bitmap.height / 2)
-            mImageIv2.setImageBitmap(bitmap1)
-            
-            val bitmap2 = cropBitmap(
-                bitmap,
-                bitmap.width * 2 / 3,
-                bitmap.height * 2 / 3,
-                bitmap.width / 3,
-                bitmap.height / 3
-            )
-            mImageIv3.setImageBitmap(bitmap2)
+
+            val bitmap1 = async {
+                Bitmap.createBitmap(
+                    bitmap,
+                    0,
+                    0,
+                    bitmap.width / 2,
+                    bitmap.height / 2
+                )
+            }
+            mImageIv2.setImageBitmap(bitmap1.await())
+
+            val bitmap2 = async {
+                Bitmap.createBitmap(
+                    bitmap,
+                    bitmap.width * 2 / 3,
+                    bitmap.height * 2 / 3,
+                    bitmap.width / 3,
+                    bitmap.height / 3
+                )
+            }
+            mImageIv3.setImageBitmap(bitmap2.await())
         }
     }
 
@@ -126,24 +132,6 @@ class MainActivity : AppCompatActivity() {
         openConnection.connect()
         val inputStream = openConnection.inputStream
         BitmapFactory.decodeStream(inputStream)
-    }
-
-    /**
-     * Crop Bitmap
-     * @param source
-     * @param x        The x coordinate of the first pixel in source
-     * @param y        The y coordinate of the first pixel in source
-     * @param width    The number of pixels in each row
-     * @param height   The number of rows
-     */
-    private suspend fun cropBitmap(
-        source: Bitmap,
-        x: Int,
-        y: Int,
-        width: Int,
-        height: Int
-    ): Bitmap = withContext(Dispatchers.IO) {
-        Bitmap.createBitmap(source, x, y, width, height)
     }
 }
 ```
