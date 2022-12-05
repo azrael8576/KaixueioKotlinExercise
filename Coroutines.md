@@ -135,5 +135,74 @@ class MainActivity : AppCompatActivity() {
     }
 }
 ```
+## 到底什么是「非阻塞式」挂起？协程真的更轻量级吗？
+### 使用协程实现一个网络请求：
+
+- 等待时显示 Loading；
+- 请求成功或者出错让 Loading 消失；
+- 请求失败需要提示用户请求失败了;
+- 让你的协程写法上看上去像单线程。
+
+程式碼如下 : 
+```kotlin
+...
+
+fun Context.toast(message: CharSequence) =
+    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+
+class MainActivity : AppCompatActivity() {
+       private val TAG = MainActivity::class.java.name
+
+    private lateinit var mImageIv: ImageView
+    private lateinit var mImageUrlEdText: EditText
+    private lateinit var mDownloagBtn: Button
+    private lateinit var mProgressBar: ProgressBar
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        mImageIv = findViewById<ImageView>(R.id.iv_image)
+        mImageUrlEdText = findViewById<EditText>(R.id.edText_image_url)
+        mDownloagBtn = findViewById<Button>(R.id.btn_download)
+        mProgressBar = findViewById<ProgressBar>(R.id.progressBar)
+
+        mDownloagBtn.setOnClickListener {
+            CoroutineScope(Dispatchers.Main).launch {
+                mProgressBar.visibility = View.VISIBLE
+                mImageIv.visibility = View.GONE
+                val bitmap = getImage(mImageUrlEdText.text.toString())
+                mProgressBar.visibility = View.GONE
+                if (bitmap != null) {
+                    mImageIv.visibility = View.VISIBLE
+                    mImageIv.setImageBitmap(bitmap)
+                } else {
+                    mImageIv.visibility = View.GONE
+                    this@MainActivity.toast("載入圖片失敗")
+                }
+            }
+        }
+    }
+
+    /**
+     * Download Image
+     */
+    private suspend fun getImage(imgUrl: String): Bitmap ?= withContext(Dispatchers.IO) {
+        try {
+            val urlParam = URL(imgUrl)
+            val openConnection = urlParam.openConnection() as HttpURLConnection
+            openConnection.requestMethod = "GET"
+            openConnection.connect()
+            if (200 == openConnection.responseCode) {
+                val inputStream = openConnection.inputStream
+                BitmapFactory.decodeStream(inputStream)
+            } else {
+                null
+            }
+        } catch (e : java.net.MalformedURLException) {
+            null
+        }
+    }
+}
+```
 
 ### End
