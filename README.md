@@ -1,4 +1,4 @@
-[【码上开学】](https://rengwuxian.com/tag/kotlin/)Kotlin 課後練習題 分享
+[【码上开学】](https://rengwuxian.com/tag/kotlin/)Kotlin 課後練習題 實作程式碼
 ### [Kotlin基礎](https://github.com/azrael8576/KaixueioKotlinExercise/blob/main/Kotlin%E5%9F%BA%E7%A4%8E.md)
 ### [Coroutines](https://github.com/azrael8576/KaixueioKotlinExercise/blob/main/Coroutines.md)
 ### [Lambda](https://github.com/azrael8576/KaixueioKotlinExercise/blob/main/Lambda.md)
